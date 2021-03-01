@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xsi:schemaLocation="
+http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+http://www.springframework.org/schema/tx
+http://www.springframework.org/schema/tx/spring-tx-4.3.xsd" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans">
+
+    <import resource="applicationcontext-jdbc-connector-datasource.xml" />
+
+    <bean id="authenticationJpaAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+        <property name="showSql" value="true" />
+        <property name="generateDdl" value="true" />
+        <property name="databasePlatform" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
+    </bean>
+
+    <bean id="authenticationEntityManagerFactoryBean" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="authenticationDataSource" />
+        <property name="jpaVendorAdapter" ref="authenticationJpaAdapter" />
+        <property name="packagesToScan" value="de.leuphana.shop.authenticationmicroservice.connector.entity" />
+
+        <property name="jpaPropertyMap">
+            <map>
+                <entry key="hibernate.hbm2ddl.auto" value="create" />
+                <entry key="hibernate.default_batch_fetch_size" value="25" />
+                <entry key="hibernate.jdbc.batch_size" value="25" />
+            </map>
+        </property>
+    </bean>
+
+    <bean id="authenticationTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="authenticationEntityManagerFactoryBean" />
+    </bean>
+
+    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+
+    <tx:annotation-driven transaction-manager="authenticationTransactionManager" />
+
+    <bean id="authenticationDatabaseConnector" class="de.leuphana.shop.authenticationmicroservice.connector.AuthenticationDatabaseConnector" />
+</beans>

@@ -1,0 +1,26 @@
+version: "3.0"
+services:
+  authentication:
+    build:
+      context: .
+    links:
+      - database
+    ports:
+      - "127.0.0.1:8080:8080"
+
+  database:
+    image: mariadb:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: jNPkaSSfBJA8dd4p4z39Vs69e52PvgBE
+      MYSQL_DATABASE: authentication
+      MYSQL_USER: authentication
+      MYSQL_PASSWORD: jNPkaSSfBJA8dd4p4z39Vs69e52PvgBE
+    ports:
+      - "127.0.0.1:3306:3306"
+
+  adminer:
+    image: adminer:latest
+    links:
+      - database
+    ports:
+      - "127.0.0.1:8000:8080"
