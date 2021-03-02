@@ -177,4 +177,12 @@
             </plugin>
         </plugins>
     </build>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub Package Repositoy</name>
+            <url>https://maven.pkg.github.com/sbk-cloud-services/authentication-microservice</url>
+        </repository>
+    </distributionManagement>
 </project>

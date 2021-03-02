@@ -1,6 +1,7 @@
 version: "3.0"
 services:
   authentication:
+    image: ghcr.io/sbk-cloud-services/customer-microservice:latest
     build:
       context: .
     links:
