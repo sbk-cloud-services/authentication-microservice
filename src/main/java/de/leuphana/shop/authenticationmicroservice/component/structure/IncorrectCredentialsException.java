@@ -1,6 +1,6 @@
 package de.leuphana.shop.authenticationmicroservice.component.structure;
 
-public class IncorrectCredentialsException extends RuntimeException {
+public class IncorrectCredentialsException extends Exception {
 
 	private static final long serialVersionUID = 1L;
     

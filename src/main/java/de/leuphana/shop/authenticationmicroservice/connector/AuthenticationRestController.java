@@ -11,22 +11,20 @@ import de.leuphana.shop.authenticationmicroservice.component.structure.Authentic
 
 @RestController
 public class AuthenticationRestController {
-    @PostMapping("/login")
+
+    @PostMapping("/authenticate")
     @ResponseBody
-    public AuthenticationToken login(@RequestBody EmailPasswordCredentials emailPasswordCredentials) {
+    public AuthenticationToken authenticate(@RequestBody EmailPasswordCredentials emailPasswordCredentials) {
         String email = emailPasswordCredentials.getEmail();
         String password = emailPasswordCredentials.getPassword();
 
         AuthenticationService authenticationService = (AuthenticationService) AuthenticationServiceApplication.getApplicationContext().getBean("authenticationService");
 
-
-        return authenticationService.login(email, password);
-    }
-
-    @PostMapping("/token")
-    @ResponseBody
-    public void verifyToken(@RequestBody AuthenticationToken authenticationToken) {
-        AuthenticationService authenticationService = (AuthenticationService) AuthenticationServiceApplication.getApplicationContext().getBean("authenticationService");
-        authenticationService.verifyToken(authenticationToken.getToken());
+        try {
+            AuthenticationToken authenticationToken = authenticationService.authenticate(email, password);
+            return authenticationToken;
+        } catch (Exception exception) {
+            return null;
+        }
     }
 }

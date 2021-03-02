@@ -4,7 +4,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import de.leuphana.shop.authenticationmicroservice.component.structure.IncorrectCredentialsException;
 import de.leuphana.shop.authenticationmicroservice.component.structure.AuthenticationToken;
-import de.leuphana.shop.authenticationmicroservice.component.structure.AuthenticationTokenFactory;
+import de.leuphana.shop.authenticationmicroservice.component.structure.AuthenticationTokenManager;
 import de.leuphana.shop.authenticationmicroservice.component.structure.IncorrectAuthenticationTokenException;
 import de.leuphana.shop.authenticationmicroservice.component.structure.User;
 import de.leuphana.shop.authenticationmicroservice.connector.AuthenticationDatabaseConnector;
@@ -13,30 +13,27 @@ public class AuthenticationServiceImplementation implements AuthenticationServic
 
 	private AuthenticationDatabaseConnector authenticationDatabaseConnector;
 	private PasswordEncoder passwordEncoder;
+	private AuthenticationTokenManager authenticationTokenManager;
 
-	public AuthenticationServiceImplementation(AuthenticationDatabaseConnector authenticationDatabaseConnector, PasswordEncoder passwordEncoder) {
+	public AuthenticationServiceImplementation(AuthenticationDatabaseConnector authenticationDatabaseConnector,
+			PasswordEncoder passwordEncoder, AuthenticationTokenManager authenticationTokenManager) {
 		this.authenticationDatabaseConnector = authenticationDatabaseConnector;
 		this.passwordEncoder = passwordEncoder;
+		this.authenticationTokenManager = authenticationTokenManager;
 	}
 
-	public AuthenticationToken login(String email, String password) {
+	public AuthenticationToken authenticate(String email, String password) throws IncorrectCredentialsException {
 		User user = authenticationDatabaseConnector.getUser(email);
 
-		if(user == null || !passwordEncoder.matches(password, user.getPassword())) {
+		if (user == null || !passwordEncoder.matches(password, user.getPassword())) {
 			throw new IncorrectCredentialsException("Incorrect username or password");
 		}
 
-		AuthenticationTokenFactory AuthenticationTokenFactory = new AuthenticationTokenFactory();
-		AuthenticationToken authenticationToken = AuthenticationTokenFactory.create();
-
-		authenticationDatabaseConnector.createAuthenticationToken(authenticationToken);
-		
-		return authenticationToken;
+		return authenticationTokenManager.create(user);
 	}
 
 	@Override
-	public void verifyToken(String token) {
-		AuthenticationToken authenticationToken = authenticationDatabaseConnector.getAuthenticationToken(token);
-		if(authenticationToken == null) throw new IncorrectAuthenticationTokenException("Provided token is invalid");
+	public void verifyToken(String token) throws IncorrectAuthenticationTokenException {
+		authenticationTokenManager.verify(token);
 	}
 }
