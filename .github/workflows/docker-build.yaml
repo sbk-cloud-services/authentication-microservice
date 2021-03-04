@@ -1,4 +1,4 @@
-name: Build and upload to private maven repository
+name: Build and upload docker image
 on:
   push:
     branches:
