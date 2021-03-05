@@ -20,7 +20,7 @@ http://www.springframework.org/schema/tx/spring-tx-4.3.xsd" xmlns:tx="http://www
 
         <property name="jpaPropertyMap">
             <map>
-                <entry key="hibernate.hbm2ddl.auto" value="create" />
+                <entry key="hibernate.hbm2ddl.auto" value="validate" />
                 <entry key="hibernate.default_batch_fetch_size" value="25" />
                 <entry key="hibernate.jdbc.batch_size" value="25" />
             </map>

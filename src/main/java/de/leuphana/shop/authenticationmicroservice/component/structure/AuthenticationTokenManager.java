@@ -51,7 +51,9 @@ public class AuthenticationTokenManager {
 	}
 
 	public void verify(String token) throws IncorrectAuthenticationTokenException {
-        if(!Jwts.parserBuilder().setSigningKey(publicKey).build().isSigned(token)) {
+        try {
+            Jwts.parserBuilder().setSigningKey(publicKey).build().parse(token);
+        } catch(Exception exception) {
             throw new IncorrectAuthenticationTokenException("Token is not valid");
         }
 	}
