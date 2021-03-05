@@ -1,9 +1,7 @@
 package de.leuphana.shop.authenticationmicroservice.component.structure;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.InputStream;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
@@ -21,10 +19,12 @@ public class AuthenticationTokenManager {
     private PrivateKey privateKey;
     private PublicKey publicKey;
 
-    public AuthenticationTokenManager(String privateKeyFilePath, String publicKeyFilePath)
-            throws NoSuchAlgorithmException, InvalidKeySpecException, IOException, URISyntaxException {
-        byte[] privateKeyBytes = Files.readAllBytes(Paths.get(getClass().getClassLoader().getResource(privateKeyFilePath).toURI()));
-        byte[] publicKeyBytes = Files.readAllBytes(Paths.get(getClass().getClassLoader().getResource(publicKeyFilePath).toURI()));
+    public AuthenticationTokenManager(String privateKeyFilePath, String publicKeyFilePath) throws NoSuchAlgorithmException, InvalidKeySpecException, IOException {
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(privateKeyFilePath);
+        byte[] privateKeyBytes = inputStream.readAllBytes();
+
+        inputStream = getClass().getClassLoader().getResourceAsStream(publicKeyFilePath);
+        byte[] publicKeyBytes = inputStream.readAllBytes();
 
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
 
