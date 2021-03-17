@@ -5,7 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import de.leuphana.shop.authenticationmicroservice.component.structure.IncorrectCredentialsException;
+import de.leuphana.shop.authenticationmicroservice.component.behaviour.exception.IncorrectCredentialsException;
+
 
 public class AuthenticationDatabaseConnectorTest {
 

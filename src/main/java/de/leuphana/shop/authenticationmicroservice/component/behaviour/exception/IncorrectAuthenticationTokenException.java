@@ -1,4 +1,4 @@
-package de.leuphana.shop.authenticationmicroservice.component.structure;
+package de.leuphana.shop.authenticationmicroservice.component.behaviour.exception;
 
 public class IncorrectAuthenticationTokenException extends Exception {
 

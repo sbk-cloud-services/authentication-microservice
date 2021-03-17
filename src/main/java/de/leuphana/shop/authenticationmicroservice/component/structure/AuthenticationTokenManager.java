@@ -12,6 +12,7 @@ import java.security.spec.X509EncodedKeySpec;
 import java.util.Date;
 import java.util.HashMap;
 
+import de.leuphana.shop.authenticationmicroservice.component.behaviour.exception.IncorrectAuthenticationTokenException;
 import io.jsonwebtoken.Jwts;
 
 public class AuthenticationTokenManager {

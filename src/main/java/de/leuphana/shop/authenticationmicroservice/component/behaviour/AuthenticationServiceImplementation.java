@@ -2,10 +2,10 @@ package de.leuphana.shop.authenticationmicroservice.component.behaviour;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import de.leuphana.shop.authenticationmicroservice.component.structure.IncorrectCredentialsException;
+import de.leuphana.shop.authenticationmicroservice.component.behaviour.exception.IncorrectAuthenticationTokenException;
+import de.leuphana.shop.authenticationmicroservice.component.behaviour.exception.IncorrectCredentialsException;
 import de.leuphana.shop.authenticationmicroservice.component.structure.AuthenticationToken;
 import de.leuphana.shop.authenticationmicroservice.component.structure.AuthenticationTokenManager;
-import de.leuphana.shop.authenticationmicroservice.component.structure.IncorrectAuthenticationTokenException;
 import de.leuphana.shop.authenticationmicroservice.component.structure.User;
 import de.leuphana.shop.authenticationmicroservice.connector.AuthenticationDatabaseConnector;
 

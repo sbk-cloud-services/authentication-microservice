@@ -11,9 +11,10 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import de.leuphana.shop.authenticationmicroservice.component.behaviour.AuthenticationService;
+import de.leuphana.shop.authenticationmicroservice.component.behaviour.exception.IncorrectAuthenticationTokenException;
+import de.leuphana.shop.authenticationmicroservice.component.behaviour.exception.IncorrectCredentialsException;
 import de.leuphana.shop.authenticationmicroservice.component.structure.AuthenticationToken;
-import de.leuphana.shop.authenticationmicroservice.component.structure.IncorrectAuthenticationTokenException;
-import de.leuphana.shop.authenticationmicroservice.component.structure.IncorrectCredentialsException;
+
 @TestMethodOrder(OrderAnnotation.class)
 public class AuthenticationServiceTest {
     private static AuthenticationService authenticationService;
